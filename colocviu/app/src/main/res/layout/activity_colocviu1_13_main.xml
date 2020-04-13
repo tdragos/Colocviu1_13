@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    tools:context=".Colocviu1_13MainActivity">
+
+    <Button
+    android:id="@+id/north_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="north" />
+
+    <Button
+        android:id="@+id/east_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/north_button"
+        android:layout_alignParentRight="true"
+        android:text="east" />
+
+    <Button
+        android:id="@+id/west_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/north_button"
+        android:layout_alignParentLeft="true"
+        android:text="west" />
+
+    <Button
+        android:id="@+id/south_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/east_button"
+        android:text="south" />
+
+    <EditText
+        android:id="@+id/directions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:saveEnabled="false"
+        android:enabled="false"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/south_button"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/navigate_to_secondary_activity_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/directions"
+        android:text="navigate to second activity" />
+
+
+</RelativeLayout>
