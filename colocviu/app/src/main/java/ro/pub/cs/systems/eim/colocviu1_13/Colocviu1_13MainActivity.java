@@ -2,17 +2,20 @@ package ro.pub.cs.systems.eim.colocviu1_13;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Colocviu1_13MainActivity extends AppCompatActivity {
 
     private EditText directions;
     private int number_clicks = 0;
     private Button north_button, west_button, east_button, south_button;
+    private Button navigateToSecondaryActivityButton;
     private ButtonClickListener buttonClickListener = new ButtonClickListener();
     private class ButtonClickListener implements View.OnClickListener {
         @Override
@@ -67,6 +70,14 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
                     }
                     number_clicks++;
                     break;
+                case R.id.navigate_to_secondary_activity_button:
+                Intent intent = new Intent(getApplicationContext(), Colocviu1_13SecondaryActivity.class);
+                intent.putExtra("directions", s);
+                s = "";
+                directions.setText(s);
+                number_clicks = 0;
+                startActivityForResult(intent, 1);
+                break;
             }
         }
     }
@@ -82,6 +93,9 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
         west_button = (Button)findViewById(R.id.west_button);
         east_button = (Button)findViewById(R.id.east_button);
         south_button = (Button)findViewById(R.id.south_button);
+
+        navigateToSecondaryActivityButton = (Button)findViewById(R.id.navigate_to_secondary_activity_button);
+        navigateToSecondaryActivityButton.setOnClickListener(buttonClickListener);
 
         north_button.setOnClickListener(buttonClickListener);
         west_button.setOnClickListener(buttonClickListener);
@@ -113,6 +127,15 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
         } else {
             number_clicks = 0;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (resultCode == -1)
+            Toast.makeText(this, "The activity returned with register ", Toast.LENGTH_LONG).show();
+        else if (resultCode == 0)
+            Toast.makeText(this, "The activity returned with cancel ", Toast.LENGTH_LONG).show();
     }
 
 }
