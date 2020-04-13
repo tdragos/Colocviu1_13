@@ -79,7 +79,22 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
                 break;
             }
+
+            if (number_clicks == 4)
+            {
+                Intent intent = new Intent(getApplicationContext(), Colocviu1_13Service.class);
+                intent.putExtra("directions", s);
+                getApplicationContext().startService(intent);
+            }
+
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent(this, Colocviu1_13Service.class);
+        stopService(intent);
+        super.onDestroy();
     }
 
     @Override
