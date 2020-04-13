@@ -10,10 +10,12 @@ public class ProcessingThread extends Thread {
 
     private Context context = null;
     private boolean isRunning = true;
+    private String s;
 
 
-    public ProcessingThread(Context context) {
+    public ProcessingThread(Context context, String s) {
         this.context = context;
+        this.s = s;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class ProcessingThread extends Thread {
 
     private void sendMessage() {
         Intent intent = new Intent();
-        String s = intent.getStringExtra("directions");
+        intent.setAction("10");
         intent.putExtra("service",
                 new Date(System.currentTimeMillis()) + " " + s);
         context.sendBroadcast(intent);

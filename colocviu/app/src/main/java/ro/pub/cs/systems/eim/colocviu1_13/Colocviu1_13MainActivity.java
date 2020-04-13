@@ -2,7 +2,10 @@ package ro.pub.cs.systems.eim.colocviu1_13;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +19,9 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
     private int number_clicks = 0;
     private Button north_button, west_button, east_button, south_button;
     private Button navigateToSecondaryActivityButton;
+    private IntentFilter intentFilter = new IntentFilter();
     private ButtonClickListener buttonClickListener = new ButtonClickListener();
+
     private class ButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -90,6 +95,15 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
         }
     }
 
+    private MessageBroadcastReceiver messageBroadcastReceiver = new MessageBroadcastReceiver();
+    private class MessageBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("bcast", intent.getStringExtra("service"));
+        }
+    }
+
+
     @Override
     protected void onDestroy() {
         Intent intent = new Intent(this, Colocviu1_13Service.class);
@@ -116,6 +130,8 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
         west_button.setOnClickListener(buttonClickListener);
         east_button.setOnClickListener(buttonClickListener);
         south_button.setOnClickListener(buttonClickListener);
+
+        intentFilter.addAction("10");
 
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey("number clicks")) {
@@ -152,5 +168,18 @@ public class Colocviu1_13MainActivity extends AppCompatActivity {
         else if (resultCode == 0)
             Toast.makeText(this, "The activity returned with cancel ", Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(messageBroadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(messageBroadcastReceiver);
+        super.onPause();
+    }
+
 
 }
